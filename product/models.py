@@ -39,6 +39,6 @@ class option(models.Model):
     price        = models.DecimalField(max_digits=18, decimal_places=0)
     product      = models.ManyToManyField(Product)
     subscription = models.ManyToManyField(Subscription)
-
+    
     class Meta:
         db_table = 'options'
