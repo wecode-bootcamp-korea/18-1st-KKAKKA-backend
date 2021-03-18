@@ -34,11 +34,35 @@ class ProductImage(models.Model):
         db_table = 'productimages'
 
 
-class option(models.Model):
+class Option(models.Model):
     name         = models.CharField(max_length=100)
     price        = models.DecimalField(max_digits=18, decimal_places=0)
-    product      = models.ManyToManyField(Product)
-    subscription = models.ManyToManyField(Subscription)
+    product      = models.ManyToManyField(
+        Product,
+        through        ='OptionProduct',
+        through_fields = ('option','product')
+        )
+    subscription = models.ManyToManyField(
+        Subscription,
+        through        = 'OptionSubscription',
+        through_fields = ('option', 'subscription')
+        )
     
     class Meta:
         db_table = 'options'
+
+
+class OptionProduct(models.Model):
+    option  = models.ForeignKey(Option, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table ='option_products'
+
+
+class OptionSubscription(models.Model):
+    option       = models.ForeignKey(Option, on_delete=models.CASCADE)
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'option_subscriptions'

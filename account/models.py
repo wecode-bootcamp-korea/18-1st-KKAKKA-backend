@@ -23,10 +23,10 @@ class AdditionalInformation(models.Model):
 
 
 class WishList(models.Model):
-    account      = models.ForeignKey(Account, on_delete=models.CASCADE)
-    product      = models.ForeignKey(Product, models.SET_NULL, blank=True, null=True)
+    account          = models.ForeignKey(Account, on_delete=models.CASCADE)
+    product          = models.ForeignKey(Product, models.SET_NULL, blank=True, null=True)
     product_quantity = models.IntegerField()
-    subscription = models.ForeignKey(Subscription, models.SET_NULL, blank=True, null=True)
-    create_at    = models.DateField(auto_now_add=True)
+    subscription     = models.ForeignKey(Subscription, models.SET_NULL, blank=True, null=True)
+    create_at        = models.DateField(auto_now_add=True)
     class Meta:
         db_table = 'WishLists'
