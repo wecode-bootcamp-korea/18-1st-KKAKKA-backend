@@ -1,6 +1,5 @@
 from django.db       import models
 
-# from subscription.models import Subscription
 
 class Category(models.Model):
     name = models.CharField(max_length=30)

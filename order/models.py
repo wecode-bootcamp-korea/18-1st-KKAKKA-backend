@@ -85,7 +85,7 @@ class SubscriptionCart(models.Model):
     delivery_date        = models.DateField (('delivery_date'), default=timezone.now(), null=True)
 
     class Meta:
-        db_table = 'subscriptions_carts'
+        db_table = 'subscription_carts'
 
 
 class LessonCart(models.Model):
