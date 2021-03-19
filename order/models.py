@@ -6,7 +6,7 @@ from django.utils import timezone
 from account.models      import Account
 from lesson.models       import LessonLocation
 from product.models      import Product, OptionProduct, OptionSubscription
-from subscription.models import Subscription
+from subscription.models import SubscriptionPlan
 
 
 
@@ -33,7 +33,7 @@ class PaymentMethod(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        db_table = 'paymentmethods'
+        db_table = 'payment_methods'
 
 
 class Order(models.Model):
@@ -49,8 +49,8 @@ class Order(models.Model):
         OptionProduct,
         through = 'ProductCart',
     )
-    subscription  = models.ManyToManyField(
-        Subscription,
+    subscriptionplan  = models.ManyToManyField(
+        SubscriptionPlan,
         through = 'SubscriptionCart'
     )
     subscription_option = models.ManyToManyField(
@@ -74,18 +74,18 @@ class ProductCart(models.Model):
     delivery_date   = models.DateField (('delivery_date'), default=timezone.now(), null=True)
     
     class Meta:
-        db_table = 'productcarts'
+        db_table = 'product_carts'
 
 
 class SubscriptionCart(models.Model):
     order                = models.ForeignKey(Order, on_delete=models.CASCADE)
-    subscription         = models.ForeignKey(Subscription, on_delete=models.CASCADE)
+    subscription         = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
     subscription_option  = models.ForeignKey(OptionSubscription, on_delete=models.CASCADE)
     quantity             = models.IntegerField(default=1, blank=True, null=False)
     delivery_date        = models.DateField (('delivery_date'), default=timezone.now(), null=True)
 
     class Meta:
-        db_table = 'subscriptionscarts'
+        db_table = 'subscriptions_carts'
 
 
 class LessonCart(models.Model):
@@ -94,4 +94,4 @@ class LessonCart(models.Model):
     attending_date  = models.DateField(('attending_date'), default=timezone.now(), null=True)
 
     class Meta:
-        db_table = 'lessoncarts'
+        db_table = 'lesson_carts'

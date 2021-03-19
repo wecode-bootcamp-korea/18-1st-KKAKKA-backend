@@ -1,13 +1,9 @@
 from django.db import models
 
-from category.models  import Category
-
 
 class Subscription(models.Model):
     name         = models.CharField(max_length=50)
-    monthly_plan = models.CharField(max_length=50)
-    price        = models.DecimalField(max_digits=18, decimal_places=2)
-    category     = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category     = models.ForeignKey('product.Category', on_delete=models.CASCADE)
     introduction = models.CharField(max_length=500)
 
     class Meta:
@@ -20,3 +16,23 @@ class SubscriptionDetail(models.Model):
 
     class Meta:
         db_table = 'subscription_details'
+
+
+class MonthlyPlan(models.Model):
+    name = models.CharField(max_length=100)
+    subscription = models.ManyToManyField(
+        Subscription,
+        through = 'SubscriptionPlan'
+    )
+
+    class Meta:
+        db_table = 'monthly_plans'
+
+
+class SubscriptionPlan(models.Model):
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE)
+    monthly_plan = models.ForeignKey(MonthlyPlan, on_delete=models.CASCADE)
+    price        = models.DecimalField(max_digits=18, decimal_places=0)
+
+    class Meta:
+        db_table = 'subscription_plan'
