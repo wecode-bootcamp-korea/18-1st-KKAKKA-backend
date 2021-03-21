@@ -21,12 +21,12 @@ class Product(models.Model):
         db_table = 'products'
 
 
-class ProductSize(models.Model):
-    name    = models.CharField(max_length=50)
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
+# class ProductSize(models.Model):
+#     name    = models.CharField(max_length=50)
+#     product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
 
-    class Meta:
-        db_table = 'product_sizes'
+#     class Meta:
+#         db_table = 'product_sizes'
 
 
 class ProductImage(models.Model):
