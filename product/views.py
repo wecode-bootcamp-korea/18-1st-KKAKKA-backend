@@ -15,6 +15,9 @@ class ProductView(View):
         results = []
 
         for product in products:
+            images = ProductImage.objects.filter(product=product.id)
+            print(images)
+            # if product.id == images[0].id:
             results.append(
                 {
                     'id'               : product.id,
@@ -28,13 +31,7 @@ class ProductView(View):
             )
             # if Product.name == ProductSize.product.name: #product_id인지 shell에서 확인
             #     results[0]['size'] = ProductSize.size
-            images    = ProductImage.objects.filter(product=product.id)
-            print('88888888888')#이미지 for 돌려서 
-            print(images[0].url)
-
-            if product.id == images[0].id:
-                results[0]['images'] = ProductImage.url
-
+        
         return JsonResponse({'result':results}, status=200)
 
 
