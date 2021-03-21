@@ -4,9 +4,11 @@ from product.models import Category
 
 
 class Lesson(models.Model):
-    introduction = models.CharField(max_length=50)
-    name         = models.CharField(max_length=50)
-    category     = models.ForeignKey('product.Category', on_delete=models.CASCADE)
+    introduction  = models.CharField(max_length=50)
+    name          = models.CharField(max_length=50)
+    category      = models.ForeignKey('product.Category', on_delete=models.CASCADE)
+    main_image    = models.URLField(max_length=500)
+    content_image = models.ForeignKey('lesson.LessonDetail', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'lessons'
@@ -34,3 +36,10 @@ class LessonLocation(models.Model):
 
     class Meta:
         db_table = 'lesson_locations'
+
+
+class LessonDetail(models.Model):
+    url          = models.URLField(max_length=500)
+    
+    class Meta:
+        db_table = 'lesson_details'
