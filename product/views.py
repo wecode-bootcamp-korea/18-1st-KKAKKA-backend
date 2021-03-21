@@ -5,19 +5,14 @@ from django.views     import View
 
 from .models        import *
 
-
+#전체상품 페이지
 class ProductView(View):
     def get(self, request):
         products  = Product.objects.all()
-        # sizes     = ProductSize.objects.all()
-        
 
         results = []
 
         for product in products:
-            images = ProductImage.objects.filter(product=product.id)
-            print(images)
-            # if product.id == images[0].id:
             results.append(
                 {
                     'id'               : product.id,
@@ -26,25 +21,26 @@ class ProductView(View):
                     'orign_price'      : product.orign_price,
                     'discount_rate'    : product.discount_rate,
                     'discounted_price' : product.discounted_price,
-                    'created_at'       : product.created_at
+                    'created_at'       : product.created_at,
+                    'image'            : product.main_image,
+                    'size'             : product.size.name
                 }
             )
-            # if Product.name == ProductSize.product.name: #product_id인지 shell에서 확인
-            #     results[0]['size'] = ProductSize.size
         
         return JsonResponse({'result':results}, status=200)
 
-
+#상품 상세페이지
 class ProductDetailView(View):
     def get(self, request):
         products  = Product.objects.all()
-        # sizes     = ProductSize.objects.all()
-        images    = ProductImage.objects.get(Product.name)
+        sizes     = ProductSize.objects.all()
+        
         option    = option.objects.all()
 
         results = []
 
         for product in products:
+            images = ProductImage.objects.filter(product=product.id)
             results.append(
                 {
                     'id'               : product.id,
