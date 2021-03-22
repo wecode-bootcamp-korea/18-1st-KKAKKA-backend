@@ -6,6 +6,7 @@ class Subscription(models.Model):
     category     = models.ForeignKey('product.Category', on_delete=models.CASCADE)
     introduction = models.CharField(max_length=500)
     main_image   = models.URLField(max_length=500)
+    description  = models.TextField(default='')
 
     class Meta:
         db_table = 'subscriptions'
