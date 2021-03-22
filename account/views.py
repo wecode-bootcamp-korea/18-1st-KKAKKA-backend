@@ -88,12 +88,3 @@ def Validator(func):
     
     return Finder
 
-
-# class Test(View):
-#     @Validator
-#     def post(self, request):
-#         data   = json.loads(request.body)
-#         account = Account.objects.get(id)e
-        
-        
-
