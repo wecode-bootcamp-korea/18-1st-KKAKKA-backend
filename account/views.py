@@ -1,3 +1,4 @@
+from account.utils import Validator
 import json,bcrypt,jwt,re
 from json.decoder     import JSONDecodeError
 
@@ -7,7 +8,7 @@ from django.http      import JsonResponse
 
 from .models          import Account
 from my_settings      import SECRET_KEY, ALGORITHM
-
+from .utils import Validator
 
 class SignUpView(View):
     def post(self, request):
@@ -41,8 +42,9 @@ class SignUpView(View):
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)   
 
+
 class SignInView(View):
-    def post(self, request):
+    def hpost(self, request):
         try:    
             data          = json.loads(request.body)
             id            = data['id']
@@ -68,23 +70,4 @@ class SignInView(View):
 
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)  
-
-
-def Validator(func):
-    def Finder(self, request, *args, **kwargs):
-        encoded_token = request.headers.get('Authorization')
-    
-        try:
-            if encoded_token:
-                decoded_token = jwt.decode(encoded_token, 'SECRET_KEY', ALGORITHM='HS256')
-                request.pk    = Account.objects.get(id=decoded_token['id'])
-                print(encoded_token,decoded_token,request.pk)
-            return JsonResponse({'message':'error_signin_needed'}, status=401)
-
-        except Account.DoesNotExist:
-            return JsonResponse({"message" : "INVALID_USER"}, status=401)
-        except jwt.exceptions.DecodeError:
-            return JsonResponse({"message" : "INVALID_TOKEN"}, status=401)
-    
-    return Finder
 
