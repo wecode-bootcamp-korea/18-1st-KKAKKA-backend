@@ -41,10 +41,10 @@ class ProductView(View):
 
 #상품 상세페이지
 class ProductDetailView(View):
-    def get(self, request):
-        products  = Product.objects.all()
-        results = []
-        for product in products:
+    def get(self, request, product_id):
+        try:
+            product  = Product.objects.get(id=product_id)
+            results = []
             results.append(
                 {
                     'id'               : product.id,
@@ -53,14 +53,21 @@ class ProductDetailView(View):
                     'orign_price'      : product.orign_price,
                     'discount_rate'    : product.discount_rate,
                     'discounted_price' : product.discounted_price,
-                }
-            )
+                    }
+                )
 
-            images = ProductImage.objects.filter(product=product.id)
+            images = ProductImage.objects.filter(product=product_id)
             images_detail = []
+            
             for image in images:
                 images_detail.append(image.url)
-                print(images_detail)
                 results[0]['images'] = images_detail
 
-        return JsonResponse({'result':results}, status=200)
+            return JsonResponse({'result':results}, status=200)
+
+        except JSONDecodeError:
+            return JsonResponse({'message': 'JSON_DECODE_ERROR'}, status=400)
+        except KeyError:
+            return JsonResponse({'message': 'KEY_ERROR'}, status=400)
+        except Product.DoesNotExist:
+            return JsonResponse({'message': 'Product_DOES_NOT_EXIST'}, status=404)
