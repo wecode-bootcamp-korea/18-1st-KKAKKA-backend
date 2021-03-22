@@ -4,8 +4,8 @@ from subscription.models  import Subscription
 
 class Account(models.Model):
     name         = models.CharField(max_length=20)
-    email        = models.EmailField(max_length=100)
-    phone_number = models.CharField(max_length=50)
+    email        = models.EmailField(max_length=100, unique=True)
+    phone_number = models.CharField(max_length=50, unique=True)
     password     = models.CharField(max_length=300)
 
     class Meta:
@@ -27,5 +27,6 @@ class WishList(models.Model):
     product_quantity = models.IntegerField()
     subscription     = models.ForeignKey(Subscription, models.SET_NULL, blank=True, null=True)
     create_at        = models.DateTimeField(auto_now_add=True)
+    
     class Meta:
         db_table = 'wishlists'
