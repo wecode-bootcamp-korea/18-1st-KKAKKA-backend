@@ -24,7 +24,7 @@ class MonthlyPlan(models.Model):
     name = models.CharField(max_length=100)
     subscription = models.ManyToManyField(
         Subscription,
-        through = 'SubscriptionPlan'
+        through = 'SubscriptionPlan',
     )
 
     class Meta:

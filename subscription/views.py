@@ -7,12 +7,10 @@ from django.views     import View
 from .models        import *
 
 #전체구독상품 페이지
-# 가격 manytomany 역참조 확인해서 입력하기
 class SubscriptionView(View):
     def get(self, request):
         try:
             subscriptions  = Subscription.objects.all()
-            prices          = SubscriptionPlan.objects.all()
 
             results = []
 
@@ -26,20 +24,14 @@ class SubscriptionView(View):
                         'description'      : subscription.description,
                     }
                 )
-                # price = []
                 
-                # for price in prices:
-                #     print(price)
-                #     p1 = price.objects.filter(monthly_id)
-                #     print('******')
-                #     print(p1)
-                #     print('********')
-                    # price.appned(
-                    #     {
-                    #         filter(monthly_plan.name == '정기결제')
+                prices = SubscriptionPlan.objects.get(subscription_id = subscription.id)
+                results.append(
+                    {
+                        'price' : prices.price
+                    }
+                )
 
-                    #     }
-                    # )
             return JsonResponse({'result':results}, status=200)
 
         except JSONDecodeError:
@@ -52,7 +44,6 @@ class SubscriptionView(View):
 
 
 #상품 상세페이지
-# 가격 manytomany 역참조 확인해서 입력하기
 class ProductDetailView(View):
     def get(self, request, subscription_id):
         try:
@@ -63,9 +54,15 @@ class ProductDetailView(View):
                     'id'               : subscription.id,
                     'name'             : subscription.name,
                     'introduction'     : subscription.introduction,
-                    # 'price'            : subscription.orign_price,
                     }
                 )
+
+            prices = SubscriptionPlan.objects.get(subscription_id = subscription.id)
+            results.append(
+                {
+                    'price' : prices.price
+                }
+            )
 
             images = SubscriptionDetail.objects.filter(subscription=subscription_id)
             images_detail = []
