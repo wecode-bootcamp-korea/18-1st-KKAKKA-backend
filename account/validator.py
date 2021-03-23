@@ -1,7 +1,9 @@
 import jwt
-from .models import Account
-from django.http      import JsonResponse
 
+from django.http    import JsonResponse
+
+from .models        import Account
+from my_settings    import ALGORITHM, SECRET_KEY
 
 def Validator(func):
     def Finder(self, request, *args, **kwargs):
@@ -9,9 +11,8 @@ def Validator(func):
     
         try:
             if encoded_token:
-                decoded_token = jwt.decode(encoded_token, 'SECRET_KEY', ALGORITHM='HS256')
+                decoded_token = jwt.decode(encoded_token, SECRET_KEY, ALGORITHM)
                 request.pk    = Account.objects.get(id=decoded_token['id'])
-                print(encoded_token,decoded_token,request.pk)
             return JsonResponse({'message':'error_signin_needed'}, status=401)
 
         except Account.DoesNotExist:
