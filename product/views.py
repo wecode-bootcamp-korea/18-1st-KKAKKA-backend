@@ -5,7 +5,7 @@ from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
 from product.models        import *
-from subscription.models   import *
+from subscription.models   import Subscription, SubscriptionPlan
 
 
 #메인페이지
@@ -15,24 +15,16 @@ class MainView(View):
             products       = Product.objects.all()
             subscriptions  = Subscription.objects.all()
 
-            subscription_list = []
-
-            for subscription in subscriptions:
-                subscription_list.append(
-                    {
-                        'id'               : subscription.id,
-                        'name'             : subscription.name,
-                        'introduction'     : subscription.introduction,
-                        'image'            : subscription.main_image,
-                    }
-                )
-                
-                prices = SubscriptionPlan.objects.get(subscription_id = subscription.id)
-                subscription_list.append(
-                    {
-                        'price' : prices.price
-                    }
-                )
+            subscription_list = [
+                {
+                    'id'           : subscription.id,
+                    'name'         : subscription.name,
+                    'introduction' : subscription.introduction,
+                    'image'        : subscription.main_image,
+                    'price'        : subscription.subscriptionplan_set.get(subscription_id = subscription.id).price
+                }
+                for subscription in subscriptions
+            ]
 
             product_list = []
 
