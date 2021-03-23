@@ -4,31 +4,27 @@ from json import JSONDecodeError
 from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
-from .models        import *
+from .models          import *
 
 #전체구독상품 페이지
 class SubscriptionView(View):
     def get(self, request):
         try:
-            subscriptions  = Subscription.objects.all()
+            subscriptions  = SubscriptionPlan.objects.filter(monthly_plan_id=1)
 
             results = []
 
             for subscription in subscriptions:
+                detail = subscription.subscription
+
                 results.append(
                     {
-                        'id'               : subscription.id,
-                        'name'             : subscription.name,
-                        'introduction'     : subscription.introduction,
-                        'image'            : subscription.main_image,
-                        'description'      : subscription.description,
-                    }
-                )
-                
-                prices = SubscriptionPlan.objects.get(subscription_id = subscription.id)
-                results.append(
-                    {
-                        'price' : prices.price
+                        'id'               : detail.id,
+                        'name'             : detail.name,
+                        'introduction'     : detail.introduction,
+                        'image'            : detail.main_image,
+                        'description'      : detail.description,
+                        'price'            : subscription.price
                     }
                 )
 
@@ -48,28 +44,25 @@ class ProductDetailView(View):
     def get(self, request, subscription_id):
         try:
             subscription  = Subscription.objects.get(id=subscription_id)
+            prices        = subscription.subscriptionplan_set.get(subscription_id = subscription.id)
+
             results = []
             results.append(
                 {
                     'id'               : subscription.id,
                     'name'             : subscription.name,
                     'introduction'     : subscription.introduction,
+                    'price'            : prices.price
                     }
                 )
 
-            prices = SubscriptionPlan.objects.get(subscription_id = subscription.id)
-            results.append(
-                {
-                    'price' : prices.price
-                }
-            )
-
-            images = SubscriptionDetail.objects.filter(subscription=subscription_id)
+            images = subscription.subscriptiondetail_set.filter(subscription_id = subscription.id)
             images_detail = []
             
             for image in images:
                 images_detail.append(image.url)
                 results[0]['images'] = images_detail
+                
 
             return JsonResponse({'result':results}, status=200)
 
