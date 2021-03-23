@@ -1,4 +1,4 @@
-from account.utils import Validator
+from account.validator import Validator
 import json,bcrypt,jwt,re
 from json.decoder     import JSONDecodeError
 
@@ -8,7 +8,6 @@ from django.http      import JsonResponse
 
 from .models          import Account
 from my_settings      import SECRET_KEY, ALGORITHM
-from .utils import Validator
 
 class SignUpView(View):
     def post(self, request):
