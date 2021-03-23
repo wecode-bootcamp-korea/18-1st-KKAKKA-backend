@@ -4,7 +4,7 @@ from json import JSONDecodeError
 from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
-from .models          import *
+from .models          import SubscriptionPlan, Subscription
 
 class SubscriptionView(View):
     def get(self, request):
@@ -41,8 +41,7 @@ class ProductDetailView(View):
         try:
             subscription  = Subscription.objects.get(id=subscription_id)
             prices        = subscription.subscriptionplan_set.get(subscription_id = subscription.id)
-            images = subscription.subscriptiondetail_set.filter(subscription_id = subscription.id)
-            images_detail = [ image.url for image in images ]
+            images        = subscription.subscriptiondetail_set.filter(subscription_id = subscription.id)
 
             results = []
             results.append(
@@ -51,7 +50,7 @@ class ProductDetailView(View):
                     'name'             : subscription.name,
                     'introduction'     : subscription.introduction,
                     'price'            : prices.price,
-                    'image'            : images_detail
+                    'image'            : [ image.url for image in images ]
                     }
                 )
 
