@@ -1,3 +1,4 @@
+from account.validator import Validator
 import json,bcrypt,jwt,re
 from json.decoder     import JSONDecodeError
 
@@ -5,7 +6,6 @@ from django.db.models import Q
 from django.views     import View
 from django.http      import JsonResponse
 
-from account.validator import Validator
 from .models          import Account
 from my_settings      import SECRET_KEY, ALGORITHM
 
@@ -30,7 +30,8 @@ class SignUpView(View):
             if account_check:
                 return JsonResponse({'message':'error_signup_already'}, status = 401)           
 
-            decoded_password= bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            decoded_password= hashed_password.decode('utf-8')
             Account.objects.create(email=email, name=name, phone_number=phone_number, password=decoded_password)
             return JsonResponse({'message':'success_signup'}, status = 201)
 
