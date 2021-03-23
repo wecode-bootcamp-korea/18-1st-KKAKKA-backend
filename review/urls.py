@@ -14,7 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from review.views     import PostingView, RaeadingView
 
 urlpatterns = [
-   path('kkakka', include('account.urls'))
+    path('/posting', PostingView.as_view()),
+    path('/reading', RaeadingView.as_view())
 ] 
