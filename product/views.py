@@ -4,30 +4,29 @@ from json import JSONDecodeError
 from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
-from .models        import *
+from .models        import Product
 
-#전체상품 페이지
+
 class ProductView(View):
     def get(self, request):
         try:
             products  = Product.objects.all()
 
-            results = []
+            results = [
+                {
+                    'id'               : product.id,
+                    'name'             : product.name,
+                    'detail'           : product.introduction,
+                    'orign_price'      : product.orign_price,
+                    'discount_rate'    : product.discount_rate,
+                    'discounted_price' : product.discounted_price,
+                    'created_at'       : product.created_at,
+                    'image'            : product.main_image,
+                    'size'             : product.size.name
+                }
+                for product in products
+            ]
 
-            for product in products:
-                results.append(
-                    {
-                        'id'               : product.id,
-                        'name'             : product.name,
-                        'detail'           : product.introduction,
-                        'orign_price'      : product.orign_price,
-                        'discount_rate'    : product.discount_rate,
-                        'discounted_price' : product.discounted_price,
-                        'created_at'       : product.created_at,
-                        'image'            : product.main_image,
-                        'size'             : product.size.name
-                    }
-                )
             return JsonResponse({'result':results}, status=200)
 
         except JSONDecodeError:
@@ -38,14 +37,12 @@ class ProductView(View):
             return JsonResponse({'message': 'Product_DOES_NOT_EXIST'}, status=404)
 
 
-
-#상품 상세페이지
 class ProductDetailView(View):
     def get(self, request, product_id):
         try:
             product  = Product.objects.get(id=product_id)
-            results = []
-            results.append(
+            
+            results = [
                 {
                     'id'               : product.id,
                     'name'             : product.name,
@@ -53,15 +50,12 @@ class ProductDetailView(View):
                     'orign_price'      : product.orign_price,
                     'discount_rate'    : product.discount_rate,
                     'discounted_price' : product.discounted_price,
-                    }
-                )
-
-            images = ProductImage.objects.filter(product=product_id)
-            images_detail = []
-            
-            for image in images:
-                images_detail.append(image.url)
-                results[0]['images'] = images_detail
+                    'images'           : [
+                        image.url 
+                        for image in product.productimage_set.filter(product=product_id)
+                        ]
+                }
+            ]
 
             return JsonResponse({'result':results}, status=200)
 
