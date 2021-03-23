@@ -4,11 +4,10 @@ from json import JSONDecodeError
 from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
-from product.models        import *
-from subscription.models   import Subscription, SubscriptionPlan
+from product.models        import Product
+from subscription.models   import Subscription
 
 
-#메인페이지
 class MainView(View):
     def get(self, request):
         try:
@@ -26,24 +25,21 @@ class MainView(View):
                 for subscription in subscriptions
             ]
 
-            product_list = []
+            product_list = [
+                {
+                    'id'               : product.id,
+                    'name'             : product.name,
+                    'introduction'     : product.introduction,
+                    'image'            : product.main_image,
+                    'orign_price'      : product.orign_price,
+                    'discount_rate'    : product.discount_rate,
+                    'discounted_price' : product.discounted_price,
+                    'size'             : product.size.name,
+                }
+                for product in products
+            ]
 
-            for product in products:
-                product_list.append(
-                    {
-                        'id'               : product.id,
-                        'name'             : product.name,
-                        'introduction'     : product.introduction,
-                        'image'            : product.main_image,
-                        'orign_price'      : product.orign_price,
-                        'discount_rate'    : product.discount_rate,
-                        'discounted_price' : product.discounted_price,
-                        'size'             : product.size.name,
-                    }
-                )
-
-
-            return JsonResponse({'subscription':subscription_list, 'product':product_list[0:8]}, status=200)
+            return JsonResponse({'subscription_list':subscription_list, 'product_list':product_list[0:8]}, status=200)
 
         except JSONDecodeError:
             return JsonResponse({'message': 'JSON_DECODE_ERROR'}, status=400)
