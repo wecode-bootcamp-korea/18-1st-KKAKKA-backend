@@ -1,4 +1,3 @@
-from account.validator import Validator
 import json,bcrypt,jwt,re
 from json.decoder     import JSONDecodeError
 
