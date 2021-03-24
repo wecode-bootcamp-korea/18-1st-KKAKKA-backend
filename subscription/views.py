@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import json
 from json import JSONDecodeError
 
@@ -61,3 +63,4 @@ class SubscriptionDetailView(View):
             return JsonResponse({'message': 'KEY_ERROR'}, status=400)
         except Subscription.DoesNotExist:
             return JsonResponse({'message': 'Product_DOES_NOT_EXIST'}, status=404)
+>>>>>>> main
