@@ -1,7 +1,9 @@
 from django.urls import path
 
-from .views      import MainView
+from .views             import MainView
+from subscription.views import SubscriptionView
 
 urlpatterns = [
-    path('', MainView.as_view()),
+    path('/main', MainView.as_view()),
+    path('', SubscriptionView.as_view())
 ]
