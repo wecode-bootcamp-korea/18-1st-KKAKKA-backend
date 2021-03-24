@@ -50,6 +50,7 @@ class ProductDetailView(View):
                     'orign_price'      : product.orign_price,
                     'discount_rate'    : product.discount_rate,
                     'discounted_price' : product.discounted_price,
+                    'size'             : product.size.name,
                     'images'           : [
                         image.url 
                         for image in product.productimage_set.filter(product=product_id)
