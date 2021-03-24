@@ -16,21 +16,18 @@ class SubscriptionOrderView(View):
             data = json.loads(request.body)
             
             account           = data['account']
-            subscription_id   = data['id']
-            monthly_plan      = data['monthly_plan']
+            subscription_id   = data['subscriptoin_id'] #구독 id
+            monthly_plan      = data['monthly_plan'] #정기결제->plan 
             quantity          = data['quantity']
             delivery_date     = data['dlivery_date']
 
             #order 생성, status default = '결제 전'
-            Order.objects.create(account = account, status = Order.status.get(id=1))
+            order = Order.objects.create(account = account, status = Order.status.get(id=1))
 
             #subsriptionCart
             SubscriptionCart.objects.create(
-                order         = [
-                    {account.id} 
-                    for order in SubscriptionCart.order.filter(account=account)
-                ]
-                subscription  = subscription_id
+                order         = order.id
+                subscription  = SubscriptionPlan.filter(subscription = subscription_id,)
                 quantity      = quantity
                 delivery_date = delivery_date
             )
