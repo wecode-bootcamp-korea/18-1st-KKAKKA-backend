@@ -28,7 +28,7 @@ class SubscriptionOrderView(View):
             SubscriptionCart.objects.create(
                 order         = [
                     {account.id} 
-                    for order in SubscriptionCart.order.filter(account=account, created_at = 생성일 최신)
+                    for order in SubscriptionCart.order.filter(account=account)
                 ]
                 subscription  = subscription_id
                 quantity      = quantity

@@ -16,10 +16,5 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-<<<<<<< HEAD
     path('order', include('order.urls')),
 ]
-=======
-   path('kkakka', include('account.urls'))
-] 
->>>>>>> main
