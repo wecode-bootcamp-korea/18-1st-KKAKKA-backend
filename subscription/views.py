@@ -22,7 +22,6 @@ class SubscriptionView(View):
                     
                 } 
                 for subscription in subscriptions
-                if subscription
             ]
 
             return JsonResponse({'result':results}, status=200)
