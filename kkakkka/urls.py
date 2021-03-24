@@ -16,10 +16,5 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-<<<<<<< HEAD
     path('product', include('product.urls')),
-=======
-    path('subscription', include('subscription.urls'))
-    
->>>>>>> main
 ]
