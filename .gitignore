@@ -260,7 +260,8 @@ Temporary Items
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
-
+.vscode/
+.vscode/settings.json
 # End of https://www.toptal.com/developers/gitignore/api/macos,vscode,django,python
 
 my_settings.py
