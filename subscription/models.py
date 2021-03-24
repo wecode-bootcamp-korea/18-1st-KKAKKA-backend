@@ -6,6 +6,7 @@ class Subscription(models.Model):
     category     = models.ForeignKey('product.Category', on_delete=models.CASCADE)
     introduction = models.CharField(max_length=500)
     main_image   = models.URLField(max_length=500)
+    description  = models.TextField(default='')
 
     class Meta:
         db_table = 'subscriptions'
@@ -23,7 +24,7 @@ class MonthlyPlan(models.Model):
     name = models.CharField(max_length=100)
     subscription = models.ManyToManyField(
         Subscription,
-        through = 'SubscriptionPlan'
+        through = 'SubscriptionPlan',
     )
 
     class Meta:

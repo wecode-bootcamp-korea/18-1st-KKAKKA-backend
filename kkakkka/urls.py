@@ -16,5 +16,6 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-   path('kkakka', include('account.urls'))
-] 
+    path('subscription', include('subscription.urls'))
+    
+]
