@@ -9,7 +9,7 @@ from .models          import SubscriptionPlan, Subscription
 class SubscriptionView(View):
     def get(self, request):
         try:
-            subscriptions  = SubscriptionPlan.objects.filter(monthly_plan_id=1)
+            subscription_plan  = SubscriptionPlan.objects.filter(monthly_plan_id=1)
 
             results = [ 
                 {
@@ -21,7 +21,7 @@ class SubscriptionView(View):
                     'price'        : subscription.price
                     
                 } 
-                for subscription in subscriptions
+                for subscription in subscription_plan
             ]
 
             return JsonResponse({'result':results}, status=200)
