@@ -35,7 +35,7 @@ class SubscriptionView(View):
 
 
 
-class ProductDetailView(View):
+class SubscriptionDetailView(View):
     def get(self, request, subscription_id):
         try:
             subscription  = Subscription.objects.get(id=subscription_id)
