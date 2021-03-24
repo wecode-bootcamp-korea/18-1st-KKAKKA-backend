@@ -1,7 +1,7 @@
-from django.urls import path, include
-from account.views     import ProductCartView
+from django.urls import path
+from .views      import AddressView
 
 
 urlpatterns = [
-    path('/product_cart', ProductCartView.as_view()),
+    path('/address', AddressView.as_view()),
     ] 
