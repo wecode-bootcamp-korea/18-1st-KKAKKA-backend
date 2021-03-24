@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views      import SubscriptionView, ProductDetailView
+from .views      import SubscriptionView, SubscriptionDetailView
 
 urlpatterns = [
-    path('/', SubscriptionView.as_view()),
-    path('/<int:subscription_id>', ProductDetailView.as_view())
+    path('', SubscriptionView.as_view()),
+    path('/<int:subscription_id>', SubscriptionDetailView.as_view())
 ]
