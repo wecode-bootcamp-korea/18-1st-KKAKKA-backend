@@ -5,10 +5,9 @@ from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
 from product.models        import Product
-from subscription.models   import Subscription
 
 
-class MainView(View):
+class MainProductView(View):
     def get(self, request):
         try:
             products       = Product.objects.all()
