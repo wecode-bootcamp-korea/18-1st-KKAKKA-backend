@@ -10,6 +10,7 @@ from subscription.models  import Subscription
 #subscription 주문
 class SubscriptionOrderView(View):
     # @Validator
+    # @transaction 쓰기
     def post(self, request, subscription_id):
         try:
             data = json.loads(request.body)
@@ -21,7 +22,7 @@ class SubscriptionOrderView(View):
             delivery_date     = data['dlivery_date']
 
             #order 생성, status default = '결제 전'
-            Order.objects.create(account = account, status = order.status.get(id=1))
+            Order.objects.create(account = account, status = Order.status.get(id=1))
 
             #subsriptionCart
             SubscriptionCart.objects.create(
