@@ -9,7 +9,7 @@ from subscription.models  import Subscription
 
 #subscription 주문
 class SubscriptionOrderView(View):
-    # @Validator
+    @Validator
     # @transaction 쓰기
     def post(self, request, subscription_id):
         try:
