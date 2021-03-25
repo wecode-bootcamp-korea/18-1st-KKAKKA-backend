@@ -8,6 +8,7 @@ from django.views           import View
 from .models              import Order, Status, SubscriptionCart
 from subscription.models  import Subscription, SubscriptionPlan
 from account.models       import Account
+from product.models       import OptionSubscription
 
 #subscription 주문
 class SubscriptionOrderView(View):
@@ -21,25 +22,26 @@ class SubscriptionOrderView(View):
             monthly_plan      = data['monthly_plan']
             quantity          = data['quantity']
             delivery_date     = data['delivery_date']
+            option            = data['option']
+            temp_date         = parse_date(delivery_date)
 
             # order 생성, status default = '결제 전'
-            status = Status.objects.get(id = 1)
+            status  = Status.objects.get(id = 1)
             account = Account.objects.get(id = account)
-
+            option  = OptionSubscription.objects.get(id = option)
             order = Order.objects.create(account_id = account.id, status_id = status.id)
+            subscriptionplans = SubscriptionPlan.objects.get(subscription_id = subscription_id, monthly_plan_id = monthly_plan)
 
-            # subsriptionCart
             if order:
-                temp_date = parse_date(delivery_date)
-
                 SubscriptionCart.objects.create(
-                    order         = order.id,
-                    subscription  = SubscriptionPlan.objects.filter(subscription = subscription_id, monthly_plan = monthly_plan),
-                    quantity      = quantity,
-                    delivery_date = temp_date
+                    order_id         = order.id,
+                    subscription_id  = subscriptionplans.id,
+                    subscription_option_id = option.id,
+                    quantity         = quantity,
+                    delivery_date    = temp_date
                     )
 
-            return JsonResponse({'message':'SUCCESS'}, status=200)
+                return JsonResponse({'message':'SUCCESS'}, status=200)
 
         except JSONDecodeError:
             return JsonResponse({'message': 'JSON_DECODE_ERROR'}, status=400)
