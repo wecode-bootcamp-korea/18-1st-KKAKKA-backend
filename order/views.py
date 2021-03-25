@@ -9,7 +9,6 @@ from account.validator import Validator
 
 
 class AddressView(View):
-    @Validator
     def post(self, request):
         try:    
             data            = json.loads(request.body)
@@ -27,28 +26,4 @@ class AddressView(View):
             return JsonResponse({'message': 'KEY_ERROR'}, status=400)            
 
         except JSONDecodeError:
-            return JsonResponse({'message': 'JSONDecodeError'}, status=400) 
-
-class ReceiverView(View):
-    @Validator
-    def get(self, request):
-        try:    
-            Address.objects.get(id=1).recipient_phone_number = data['recipient_phone']
-            Address.objects.get(id=1).postal_code            = data['postal_code']
-            Address.objects.get(id=1).recipient              = data['recipient']
-            Address.objects.get(id=1).address                = data['address']
-            Address.objects.get(id=1).sender                 = data['sender']
-            result:[{
-                'recipient_phone': 
-                'recipient':
-                'postal_code':
-                'address':
-                'sender':
-            }]
-            return JsonResponse({'result':'success', 'TO':result}, status = 200)
-
-        except KeyError:
-            return JsonResponse({'message': 'KEY_ERROR'}, status=400)            
-
-        except JSONDecodeError:
-            return JsonResponse({'message': 'JSONDecodeError'}, status=400) 
+            return JsonResponse({'message': 'JSONDecodeError'}, status=400)
