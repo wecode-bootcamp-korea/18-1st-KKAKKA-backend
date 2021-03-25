@@ -5,8 +5,6 @@ from django.views     import View
 from django.http      import JsonResponse
 
 from .models           import Address
-from account.validator import Validator
-
 
 class AddressView(View):
     def post(self, request):
