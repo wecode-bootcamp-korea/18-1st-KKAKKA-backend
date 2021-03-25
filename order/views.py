@@ -23,14 +23,14 @@ class SubscriptionOrderView(View):
             quantity          = data['quantity']
             delivery_date     = data['delivery_date']
             option            = data['option']
-            temp_date         = parse_date(delivery_date)
 
-            # order 생성, status default = '결제 전'
-            status  = Status.objects.get(id = 1)
-            account = Account.objects.get(id = account)
-            option  = OptionSubscription.objects.get(id = option)
-            order = Order.objects.create(account_id = account.id, status_id = status.id)
+            temp_date         = parse_date(delivery_date)
+            status            = Status.objects.get(id = 1)
+            account           = Account.objects.get(id = account)
+            option            = OptionSubscription.objects.get(id = option)
             subscriptionplans = SubscriptionPlan.objects.get(subscription_id = subscription_id, monthly_plan_id = monthly_plan)
+
+            order = Order.objects.create(account_id = account.id, status_id = status.id)
 
             if order:
                 SubscriptionCart.objects.create(
