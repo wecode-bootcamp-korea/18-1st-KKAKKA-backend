@@ -19,5 +19,6 @@ urlpatterns = [
     path('order', include('order.urls')),
     path('account', include('account.urls')), 
     path('product', include('product.urls')),
-    path('subscription', include('subscription.urls'))
+    path('subscription', include('subscription.urls')),
+    path('order', include('order.urls')),
 ]

@@ -14,7 +14,7 @@ class Address(models.Model):
     sender                 = models.CharField(max_length=50, null=True, blank=True)
     recipient              = models.CharField(max_length=100)
     recipient_phone_number = models.CharField(max_length=100)
-    postal_code            = models.IntegerField() 
+    postal_code            = models.CharField(max_length=50) 
     address                = models.CharField(max_length=200)
     save_option            = models.BooleanField()
 
