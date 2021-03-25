@@ -20,11 +20,6 @@ class AddressView(View):
             sender          = data['sender']
             save_option     = data['save']
 
-            # print(AdditionalInformation.objects.get(account_id=1))
-        
-            # # if AdditionalInformation.objects.get(account=request.pk).address is address: 
-            # #     return JsonResponse({'message':'error_address_exist'}, status=401)
-
             Address.objects.create(sender=sender, recipient=recipient,recipient_phone_number=recipient_phone, postal_code=postal_code, address=address, save_option=save_option)
             return JsonResponse({'message':'success_address_input'}, status = 201)
 
