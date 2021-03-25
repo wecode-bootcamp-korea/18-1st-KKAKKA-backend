@@ -4,9 +4,9 @@ from json.decoder     import JSONDecodeError
 from django.views     import View
 from django.http      import JsonResponse
 
-from .models           import Address, Order
+from .models           import Address
 from account.validator import Validator
-from account.models    import AdditionalInformation, Account
+
 
 class AddressView(View):
     @Validator
@@ -22,6 +22,30 @@ class AddressView(View):
 
             Address.objects.create(sender=sender, recipient=recipient,recipient_phone_number=recipient_phone, postal_code=postal_code, address=address, save_option=save_option)
             return JsonResponse({'message':'success_address_input'}, status = 201)
+
+        except KeyError:
+            return JsonResponse({'message': 'KEY_ERROR'}, status=400)            
+
+        except JSONDecodeError:
+            return JsonResponse({'message': 'JSONDecodeError'}, status=400) 
+
+class ReceiverView(View):
+    @Validator
+    def get(self, request):
+        try:    
+            Address.objects.get(id=1).recipient_phone_number = data['recipient_phone']
+            Address.objects.get(id=1).postal_code            = data['postal_code']
+            Address.objects.get(id=1).recipient              = data['recipient']
+            Address.objects.get(id=1).address                = data['address']
+            Address.objects.get(id=1).sender                 = data['sender']
+            result:[{
+                'recipient_phone': 
+                'recipient':
+                'postal_code':
+                'address':
+                'sender':
+            }]
+            return JsonResponse({'result':'success', 'TO':result}, status = 200)
 
         except KeyError:
             return JsonResponse({'message': 'KEY_ERROR'}, status=400)            
