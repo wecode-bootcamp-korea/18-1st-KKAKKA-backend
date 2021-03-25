@@ -1,7 +1,7 @@
 from django.urls import path
-from .views      import AddressView
 
+from .views      import SubscriptionOrderView
 
 urlpatterns = [
-    path('/address', AddressView.as_view()),
-    ]
+    path('/subscription/<int:subscription_id>', SubscriptionOrderView.as_view()),
+]
