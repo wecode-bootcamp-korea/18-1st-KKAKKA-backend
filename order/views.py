@@ -34,11 +34,11 @@ class SubscriptionOrderView(View):
 
             if order:
                 SubscriptionCart.objects.create(
-                    order_id         = order.id,
-                    subscription_id  = subscriptionplans.id,
+                    order_id               = order.id,
+                    subscription_id        = subscriptionplans.id,
                     subscription_option_id = option.id,
-                    quantity         = quantity,
-                    delivery_date    = temp_date
+                    quantity               = quantity,
+                    delivery_date          = temp_date
                     )
 
                 return JsonResponse({'message':'SUCCESS'}, status=200)
