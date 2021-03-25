@@ -4,7 +4,37 @@ from json import JSONDecodeError
 from django.http      import JsonResponse, HttpResponse
 from django.views     import View
 
-from .models        import Product
+from product.models        import Product
+
+
+class MainProductView(View):
+    def get(self, request):
+        try:
+            products       = Product.objects.all()
+
+            product_list = [
+                {
+                    'id'               : product.id,
+                    'name'             : product.name,
+                    'introduction'     : product.introduction,
+                    'image'            : product.main_image,
+                    'orign_price'      : product.orign_price,
+                    'discount_rate'    : product.discount_rate,
+                    'discounted_price' : product.discounted_price,
+                    'size'             : product.size.name,
+                }
+                for product in products
+            ]
+
+            return JsonResponse({'product_list':product_list[0:8]}, status=200)
+        
+        except JSONDecodeError:
+            return JsonResponse({'message': 'JSON_DECODE_ERROR'}, status=400)
+        except KeyError:
+            return JsonResponse({'message': 'KEY_ERROR'}, status=400)
+        except Product.DoesNotExist:
+            return JsonResponse({'message': 'Product_DOES_NOT_EXIST'}, status=404)
+
 
 
 class ProductView(View):

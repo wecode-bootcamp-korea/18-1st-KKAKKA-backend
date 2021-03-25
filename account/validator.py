@@ -11,7 +11,7 @@ def Validator(func):
         try:
             if encoded_token:
                 decoded_token = jwt.decode(encoded_token, SECRET_KEY, ALGORITHM)
-                request.pk    = Account.objects.get(id=decoded_token['id'])
+                request.pk = Account.objects.get(id=decoded_token['id'])
             return func(self, request, *args, **kwargs)
 
         except Account.DoesNotExist:
@@ -19,3 +19,4 @@ def Validator(func):
         except jwt.exceptions.DecodeError:
             return JsonResponse({"message" : "INVALID_TOKEN"}, status=401)
     return Finder
+Validator

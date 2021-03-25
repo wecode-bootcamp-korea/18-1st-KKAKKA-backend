@@ -68,4 +68,3 @@ class SignInView(View):
 
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)  
-
