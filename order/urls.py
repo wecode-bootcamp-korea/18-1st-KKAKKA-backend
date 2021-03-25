@@ -4,5 +4,5 @@ from .views      import AddressView,ReceiverView
 
 urlpatterns = [
     path('/address', AddressView.as_view()),
-    path('/receiver', ReceiverView.ad_view())
+    path('/receiver', ReceiverView.as_view())
     ] 
