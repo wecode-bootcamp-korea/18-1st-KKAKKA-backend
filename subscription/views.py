@@ -52,7 +52,7 @@ class SubscriptionDetailView(View):
                     'image'            : [ image.url for image in images ]
                     }
                 )
-
+            print('results')
             return JsonResponse({'result':results}, status=200)
 
         except JSONDecodeError:
