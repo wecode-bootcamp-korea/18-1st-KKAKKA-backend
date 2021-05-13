@@ -50,23 +50,38 @@
 
 ## 시연영상
 AWS 사용료 이슈로 관련 사이트는 아래의 시연영상으로 확인 부탁 드립니다!
-<a herf ="https://www.youtube.com/watch?v=UmerdMVMHbw">kkakka</a>
+<a herf ="https://www.youtube.com/watch?v=UmerdMVMHbw">kkakka video</a>
 
 ## 구현 기능
 ### Front-end
+
+
 ### Back-end
 #### 공통
 - <a href = "https://aquerytool.com:443/aquerymain/index/?rurl=3dcf441e-39c5-4bc9-8c63-cfb97965bde9">modeling</a>
 >password: pv100d
-- db_uploader작성 & CSV 파일 생성(백업용)
+- workbench 이용하여 데이터 업로드 
 
-#### user app
-회원가입 로직
-로그인 로직
-비밀번호 암호화, 토큰 발행
-회원 유효성 판단(login_decorator 작성)
-비회원용 login_decorator (non_user_accept_decorator)작성
+#### account app
+- 회원가입
+- 로그인
+- 비밀번호 암호화, 토큰 발행
+- 회원 유효성 판단(validator 작성)
 
+#### lesson, product app
+- 카테고리 별 상품 조회
+- 상품 상세페이지 조회
+- 상품 리뷰 조회(조건별 정렬)
 
+### subscription app
 
+#### order app
+- 장바구니에 상품 담기
+
+#### 
+
+# 🧨 Reference
+- 이 프로젝트는 오늘의 집 사이트를 참조하여 학습목적으로 만들었습니다.
+- 실무수준의 프로젝트이지만 학습용으로 만들었기 때문에 이 코드를 활용하여 이득을 취하거나 무단 배포할 경우 법적으로 문제될 수 있습니다.
+- 이 프로젝트에서 사용하고 있는 사진 대부분은 위코드에서 구매한 것이므로 해당 프로젝트 외부인이 사용할 수 없습니다.
 
