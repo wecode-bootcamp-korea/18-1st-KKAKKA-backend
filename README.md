@@ -50,7 +50,7 @@
 
 ## 시연영상
 AWS 사용료 이슈로 관련 사이트는 아래의 시연영상으로 확인 부탁 드립니다!
-<a herf ="https://www.youtube.com/watch?v=UmerdMVMHbw">kkakka video</a>
+<a href ="https://www.youtube.com/watch?v=UmerdMVMHbw">kkakka_video</a>
 
 ## 구현 기능
 ### Front-end
