@@ -39,7 +39,12 @@
 ### Front-end skill
 - React
 - React Router
-- Sass
+- SCSS
+- Restful API
+- React-datepicker
+- React-date fns
+- React-icon
+- Moment
 
 ### Back-end skill
 - Django
@@ -54,7 +59,18 @@ AWS 사용료 이슈로 관련 사이트는 아래의 시연영상으로 확인 
 
 ## 구현 기능
 ### Front-end
-
+#### 공통
+- Navigation Bar
+- Sub Navigation Bar
+- Footer
+#### Authentication
+- 회원가입
+- 로그인
+#### Products
+- 메인
+- 정기구독
+- 상품 리스트
+- 상품 상세
 
 ### Back-end
 #### 공통
@@ -68,12 +84,10 @@ AWS 사용료 이슈로 관련 사이트는 아래의 시연영상으로 확인 
 - 비밀번호 암호화, 토큰 발행
 - 회원 유효성 판단(validator 작성)
 
-#### lesson, product app
+#### lesson, product, subscription app
 - 카테고리 별 상품 조회
 - 상품 상세페이지 조회
 - 상품 리뷰 조회(조건별 정렬)
-
-### subscription app
 
 #### order app
 - 장바구니에 상품 담기
